@@ -1,0 +1,7 @@
+// bin/www
+var app = require('../app');
+var http = require('http');
+
+var server = http.createServer(app);
+//服务监听端口
+server.listen('4091');

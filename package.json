@@ -1,0 +1,32 @@
+{
+  "name": "bsnode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node bin/www",
+    "nodemon": "nodemon bin/www"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "glob": "^8.0.3",
+    "js-base64": "^3.7.3",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.13.4",
+    "koa-body": "^6.0.1",
+    "koa-compose": "^4.1.0",
+    "koa-jwt": "^4.0.3",
+    "koa-router": "^12.0.0",
+    "koa-static": "^5.0.0",
+    "koa2-cors": "^2.0.6",
+    "mime-types": "^2.1.35",
+    "mysql": "^2.18.1",
+    "svg-captcha": "^1.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
