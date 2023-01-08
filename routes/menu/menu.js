@@ -14,14 +14,6 @@ sortByKey = (array, key) => {
     });
 };
 
-menuTree = (array, index) => {
-    const newArray = [];
-    array.forEach((item) => {
-        if (item.menu_type === "M") {
-        }
-    });
-};
-
 // 获取所有所有菜单
 router
     .get("/getmenu", async (ctx) => {
@@ -39,7 +31,8 @@ router
             if (obj.menu_type === "M") {
                 arr.push({
                     menu_id: obj.menu_id,
-                    menu_name: obj.path,
+                    menu_name: obj.path.replaceAll("/", ""),
+                    parent_id: obj.parent_id,
                     path: "/" + obj.path,
                     alwaysShow: obj.visible,
                     status: obj.status,
@@ -58,11 +51,12 @@ router
                 });
             } else if (obj.menu_type === "C") {
                 const index = arr.findIndex((item) => item.menu_id === obj.parent_id);
-                if (index !== null || arr[index].children !== undefined) {
+                // 没有父级菜单的不返回
+                if (index !== -1 && arr[index].children !== undefined) {
                     arr[index].children.push({
                         menu_id: obj.menu_id,
                         parent_id: obj.parent_id,
-                        name: obj.path,
+                        name: obj.path.replaceAll("/", ""),
                         path: "/" + obj.path,
                         alwaysShow: obj.visible,
                         component: obj.component,
@@ -90,12 +84,13 @@ router
             }
         }
         if (allMenu.length > 0) {
+            ctx.status = 200;
             ctx.body = {
-                code: 200,
                 data: arr,
+                total: arr.length,
             };
         } else {
-            return (ctx.body = { type: "error", message: "没有数据" });
+            return (ctx.body = {type: "error", message: "没有数据"});
         }
     })
 
@@ -112,11 +107,14 @@ router
                 });
             } else if (obj.menu_type === "C") {
                 const index = arrs.findIndex((item) => item.value === obj.parent_id);
-                arrs[index].children.push({
-                    value: obj.menu_id,
-                    label: obj.menu_name,
-                    disabled: true,
-                });
+                // 没有父级菜单的不返回
+                if (index !== -1 && arrs[index].children !== undefined) {
+                    arrs[index].children.push({
+                        value: obj.menu_id,
+                        label: obj.menu_name,
+                        disabled: true,
+                    });
+                }
             }
         }
 
@@ -124,21 +122,43 @@ router
             ctx.body = {
                 code: 200,
                 data: arrs,
+                total: arrs.length,
             };
         } else {
-            return (ctx.body = { type: "error", message: "没有数据" });
+            return (ctx.body = {type: "error", message: "没有数据"});
         }
     })
 
     // 添加菜单
     .post("/addMenu", async (ctx) => {
-        console.log("bb", ctx.request.body);
-        const addData = ctx.request.body;
-        const sta = await useManu.addMenu(addData);
-        console.log(sta);
+        console.log("aa", ctx.request.body);
+        const Data = ctx.request.body;
+        await useManu.addMenu(Data);
         ctx.body = {
             code: 200,
             msg: "添加成功",
+        };
+    })
+
+    // 修改菜单
+    .put("/editMenu", async (ctx) => {
+        console.log("bb", ctx.request.body);
+        const Data = ctx.request.body;
+        Data.path = Data.path.replaceAll("/", "");
+        await useManu.editMenu(Data);
+        ctx.body = {
+            code: 200,
+            msg: "修改成功",
+        };
+    })
+
+    // 删除菜单
+    .delete("/delMenu/:id", async (ctx) => {
+        const id = ctx.params.id;
+        await useManu.delMenu(id);
+        ctx.body = {
+            code: 200,
+            msg: "删除成功",
         };
     });
 

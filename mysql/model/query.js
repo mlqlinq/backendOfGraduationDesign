@@ -29,11 +29,8 @@ const query = (sql, val) => {
                     // connection.release()
                 });
             }
-
-            // 当连接池不需要使用时，关闭连接池
-            pool.end();
         });
     });
 };
 
-module.exports = { query };
+module.exports = {query};

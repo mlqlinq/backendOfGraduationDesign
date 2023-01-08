@@ -1,8 +1,8 @@
 // router/index.js
-const compose = require('koa-compose')
-const glob = require('glob')
+const compose = require("koa-compose");
+const glob = require("glob");
 
-/** 
+/**
  * 调用router.routes()来组装匹配好的路由，返回一个合并好的中间件
  * 调用router.allowedMethods()获得一个中间件，当发送了不符合的请求时，会返回 `405 Method Not Allowed` 或 `501 Not Implemented`
  * allowedMethods方法可以做以下配置：
@@ -18,11 +18,10 @@ const glob = require('glob')
  */
 registerRouter = () => {
     let routers = [];
-    glob.sync("router/**/!(index).js", { matchMedia: true })
-        .forEach(v => {
-            routers.push(require(v.replace('router', ".")).routes(), require(v.replace('router', '.')).allowedMethods())
-        })
-    return compose(routers)
-}
+    glob.sync("routes/**/!(index).js", {matchMedia: true}).forEach((v) => {
+        routers.push(require(v.replace("routes", ".")).routes(), require(v.replace("routes", ".")).allowedMethods());
+    });
+    return compose(routers);
+};
 
-module.exports = registerRouter
+module.exports = registerRouter;
