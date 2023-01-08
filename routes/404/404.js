@@ -2,7 +2,7 @@
 const fs = require("fs");
 const path = require("path");
 const mime = require("mime-types");
-const Router = require("./");
+const Router = require("koa-router");
 const router = new Router();
 
 router.get("/404", async (ctx, next) => {
