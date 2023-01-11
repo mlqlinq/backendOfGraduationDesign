@@ -25,7 +25,6 @@ router
         //     const children = itemList.filter((v) => item.menu_id === v.parent_id);
         //     item.children = children.length > 0 ? (item.children = children) : [];
         // });
-        console.log(ctx);
         const arr = [];
         for (const obj of JSON.parse(JSON.stringify(allMenu))) {
             if (obj.menu_type === "M") {
@@ -90,7 +89,7 @@ router
                 total: arr.length,
             };
         } else {
-            return (ctx.body = {type: "error", message: "没有数据"});
+            return (ctx.body = { type: "error", message: "没有数据" });
         }
     })
 
@@ -125,7 +124,7 @@ router
                 total: arrs.length,
             };
         } else {
-            return (ctx.body = {type: "error", message: "没有数据"});
+            return (ctx.body = { type: "error", message: "没有数据" });
         }
     })
 

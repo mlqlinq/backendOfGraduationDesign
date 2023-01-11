@@ -1,4 +1,4 @@
-const {query} = require("./model/query");
+const { query } = require("./model/query");
 
 /**
  * 菜单数据操作
@@ -10,7 +10,16 @@ const {query} = require("./model/query");
 class menuO {
     // 查询所有菜单
     async getUserMenu() {
-        return await query(`SELECT * FROM sys_menu WHERE is_deleted='0'`);
+        const data = await query(`SELECT * FROM sys_menu WHERE is_deleted='0'`);
+        const sysidList = [1, 2, 4, 28, 29];
+        if (global.userData !== undefined && global.userData.user_identity === 1) {
+            sysidList.forEach((id) => {
+                const index = data.findIndex((item) => item.menu_id === id);
+                data.splice(index, 1);
+            });
+            // } else {
+        }
+        return data;
     }
 
     // 添加菜单
