@@ -10,7 +10,7 @@ router.get("/getUserList", async (ctx) => {
     });
     // console.log(newArrVal)
     if (userList.length > 0) {
-        ctx.body = {code: 200, total: newArrVal.length, data: newArrVal, message: "查询成功"};
+        ctx.body = { code: 200, total: newArrVal.length, data: newArrVal, message: "查询成功" };
     }
     return;
 });

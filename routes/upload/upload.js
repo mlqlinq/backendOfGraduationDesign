@@ -8,6 +8,7 @@ router.prefix("/upload");
 
 // 文件上传处理
 function uploadFn(ctx) {
+    // console.log(ctx.request.files);
     return new Promise((resolve, reject) => {
         if (Array.isArray(ctx.request.files.file)) {
             ctx.request.files.file.forEach((item) => {
@@ -110,9 +111,9 @@ router
     .post("/uploads/file", async (ctx) => {
         await uploadFn(ctx)
             .then((name) => {
+                ctx.status = 200;
                 ctx.body = {
-                    code: 0,
-                    url: path.join(`http://${host}:${port}/uploads`, name),
+                    url: path.join(`http://${host}:${port}/uploads`, name).replace(/\\/g, "/").replace("/", "//"),
                     msg: "文件上传成功",
                 };
             })
@@ -195,7 +196,7 @@ router
             deleteFiles(dirPath);
             ctx.body = {
                 code: 0,
-                url: path.join("http://localhost:3000/uploads", name),
+                url: path.join(`http://${host}:${port}/uploads`, name),
                 msg: "文件上传成功",
             };
             // 如果没有切片hash文件夹则表明上传失败
@@ -210,7 +211,7 @@ router
                 .then(() => {
                     ctx.body = {
                         code: 0,
-                        url: path.join("http://localhost:3000/uploads", name),
+                        url: path.join(`http://${host}:${port}/uploads`, name),
                         msg: "文件上传成功",
                     };
                 })
