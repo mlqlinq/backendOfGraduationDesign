@@ -32,7 +32,8 @@ router
     })
 
     .get("/DistrictschosData", async (ctx) => {
-        const icardNumber = ctx.request.query.query;
+        const icardNumber = ctx.request.query.id_card_number;
+        console.log("🚀 ~ file: districtScho.js:36 ~ .get ~ tx.request", ctx.request);
         if (!icardNumber) {
             ctx.status = 400;
             ctx.body = "缺少必要参数！";

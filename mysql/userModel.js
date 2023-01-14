@@ -5,31 +5,29 @@ const { query } = require("./model/query");
  * 登录注册，获取菜单数据
  */
 class UserModel {
-    // 登录用户
-    async getUser(name) {
-        const data1 = await query(`SELECT *
-                            FROM sys_user
-                            WHERE username = '${name}' AND is_deleted='0'`);
-        if (data1.length === 0) {
-            const data2 = await query(`SELECT * FROM sys_students WHERE id_card_number = '${name}' AND is_deleted='0'`);
-            data2[0].user_identity = 1;
-            return data2;
-        } else {
-            data1[0].user_identity = 0;
-            return data1;
+    // 用户 以及查询个人信息
+    async getUser(userdata) {
+        console.log(1);
+        console.log("🚀 ~ file: userModel.js:10 ~ UserModel ~ getUser ~ userdata", userdata.userIdentity);
+        let data = [];
+        if (userdata.userIdentity == 0) {
+            data = await query(`SELECT * FROM sys_user WHERE username = '${userdata.name}' AND is_deleted='0'`);
+        } else if (userdata.userIdentity == 1) {
+            data = await query(`SELECT * FROM sys_colleges_universities WHERE university_code = '${userdata.name}' AND is_deleted='0'`);
+        } else if (userdata.userIdentity == 2) {
+            data = await query(`SELECT * FROM sys_department_secretary WHERE id_number = '${userdata.name}' AND is_deleted='0'`);
+        } else if (userdata.userIdentity == 3) {
+            data = await query(`SELECT * FROM sys_guide_table WHERE id_number = '${userdata.name}' AND is_deleted='0'`);
+        } else if (userdata.userIdentity == 4) {
+            data = await query(`SELECT * FROM sys_students WHERE id_card_number = '${userdata.name}' AND is_deleted='0'`);
         }
-    }
-
-    // 登录后查询用户信息
-    async getMyInformation(data) {
-        const data1 = await query(`SELECT * FROM sys_user WHERE username = '${data}' AND is_deleted='0'`);
-        if (data1.length === 0) {
-            const data2 = await query(`SELECT * FROM sys_students WHERE id_card_number = '${data}' AND is_deleted='0'`);
-            data2[0].user_identity = 1;
-            return data2;
+        if (data.length === 0) {
+            console.log(2);
+            return data;
         } else {
-            data1[0].user_identity = 0;
-            return data1;
+            data[0].userIdentity = userdata.userIdentity;
+            console.log(3);
+            return data;
         }
     }
 
@@ -41,12 +39,10 @@ class UserModel {
 
     // 获取所有用户数据
     async getAllUser() {
-        return await query(`SELECT *
-                            FROM sys_user WHERE is_deleted='0'`);
+        return await query(`SELECT * FROM sys_user WHERE is_deleted='0'`);
     }
 
     async editUserData(data) {
-        console.log("🚀 ~ file: userModel.js:36 ~ UserModel ~ editUserData ~ data", data);
         if (data.user_identity === "1") {
             await query(`UPDATE sys_students 
             SET bank_card_no = '${data.bank_card_no}',

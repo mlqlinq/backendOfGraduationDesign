@@ -17,7 +17,7 @@ sortByKey = (array, key) => {
 // 获取所有所有菜单
 router
     .get("/getmenu", async (ctx) => {
-        let allMenu = await useManu.getUserMenu();
+        let allMenu = await useManu.getUserMenu(ctx);
         // const arr = allMenu;
         // const parentList = arr.filter((v) => v.menu_type === "M");
         // const itemList = arr.filter((v) => v.menu_type === "C");
@@ -95,7 +95,7 @@ router
 
     // 获取所有所有菜单 -- 原始数据
     .get("/getAllmenu", async (ctx) => {
-        let allMenus = await useManu.getUserMenu();
+        let allMenus = await useManu.getUserMenu(ctx);
         let arrs = [];
         for (const obj of JSON.parse(JSON.stringify(allMenus))) {
             if (obj.menu_type === "M") {

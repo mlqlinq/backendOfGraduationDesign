@@ -32,7 +32,7 @@ router
     })
 
     .get("/NationalendeavorData", async (ctx) => {
-        const icardNumber = ctx.request.query.query;
+        const icardNumber = ctx.request.query.id_card_number;
         if (!icardNumber) {
             ctx.status = 400;
             ctx.body = "缺少必要参数！";

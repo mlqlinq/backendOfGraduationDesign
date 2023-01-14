@@ -23,10 +23,8 @@ router
 
     // 登录
     .post("/login", async (ctx) => {
-        let name = ctx.request.body.name;
         let password = ctx.request.body.password;
         const data = ctx.request.body;
-        console.log("🚀 ~ file: userController.js:28 ~ router.post ~ data", data);
 
         // 对接收到的验证码进行后端验证
         const code = decodeURI(data.verificationCode);
@@ -55,19 +53,18 @@ router
             });
         }
 
-        // 从数据中查询数据
-        let res = (await User.getUser(name))[0];
         if (!data.name || !data.password || !data.userIdentity) return (ctx.body = { code: "参数不合法", data: null, msg: "参数不合法" });
+        // 从数据中查询数据
+        let res = (await User.getUser(data))[0];
         if (res) {
             delete res.is_deleted;
             delete res.create_time;
             delete res.update_time;
-            global.userData = res;
 
             if (res.password === password) {
                 ctx.body = {
                     code: 200,
-                    token: jwt.sign({ userData: global.userData }, config.PRIVATE_KEY, { expiresIn: config.JWT_EXPIRED }),
+                    token: jwt.sign({ userData: res }, config.PRIVATE_KEY, { expiresIn: config.JWT_EXPIRED }),
                     message: "登录成功！",
                     type: "success",
                 };
@@ -81,8 +78,10 @@ router
 
     // 登录后获取用户个人信息接口
     .get("/getMyinformation", async (ctx) => {
-        const myId = ctx.request.query.query;
-        const myData = await User.getMyInformation(myId);
+        const myId = ctx.request.query;
+        console.log("🚀 ~ file: getUserController.js:83 ~ .get ~ myId", myId);
+        const myData = await User.getUser(myId);
+        // const myData = await User.getMyInformation(myId);
         ctx.body = {
             data: myData[0],
             msg: "查询成功！",

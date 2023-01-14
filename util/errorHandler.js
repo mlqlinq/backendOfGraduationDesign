@@ -1,14 +1,15 @@
 const jsonToken = require("jsonwebtoken");
 const config = require("../config/utilToken");
+const jwtDecodeToken = require("../util/jwtDecodeToken");
 // 生成token
 const setToken = (username) => {
     return jsonToken.sign(
         // payload 存储用户信息
-        {username},
+        { username },
         // 私钥
         config.PRIVATE_KEY,
         // 设置过期时间
-        {expiresIn: config.JWT_EXPIRED}
+        { expiresIn: config.JWT_EXPIRED }
     );
 };
 
@@ -29,7 +30,8 @@ module.exports = (app) => {
                         });
                     } catch (error) {
                         //token过期 生成新的token
-                        const newToken = setToken(global.userData);
+                        const userData = jwtDecodeToken(token);
+                        const newToken = setToken(userData);
                         //将新token放入Authorization中返回给前端
                         ctx.res.setHeader("Authorization", `Bearer ${newToken}`);
                     }

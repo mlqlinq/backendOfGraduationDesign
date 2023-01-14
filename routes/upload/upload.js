@@ -3,12 +3,14 @@ const fs = require("fs"); // nodeJs内置文件模块
 const path = require("path"); // nodeJs内置路径模块
 const { host, port } = require("../../utils");
 const uploadPath = require("../../util/upload_config"); // 定义文件上传目录
+const admZip = require("adm-zip");
 
 router.prefix("/upload");
 
 // 文件上传处理
 function uploadFn(ctx) {
     // console.log(ctx.request.files);
+
     return new Promise((resolve, reject) => {
         if (Array.isArray(ctx.request.files.file)) {
             ctx.request.files.file.forEach((item) => {
@@ -25,6 +27,7 @@ function uploadFn(ctx) {
         } else {
             const { newFilename, filepath: _path } = ctx.request.files.file; // 拿到上传的文件信息
             const filePath = path.join(uploadPath, newFilename); // 重新组合文件名
+
             // 将临时文件重新设置文件名及地址
             fs.rename(_path, filePath, (err) => {
                 if (err) {

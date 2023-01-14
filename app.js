@@ -79,7 +79,6 @@ app.use(
                     const ext = file.originalFilename.match(reg)[0]; // 获得文件的后缀名
                     //修改上传文件名
                     file.newFilename = Date.now() + ext;
-                    console.log("🚀 ~ file: app.js:87 ~ file", file);
                 },
                 onError: (err) => {
                     console.log(err);
