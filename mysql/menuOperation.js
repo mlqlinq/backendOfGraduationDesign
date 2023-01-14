@@ -1,5 +1,24 @@
 const { query } = require("./model/query");
+const jwtDecodeToken = require("../util/jwtDecodeToken");
 
+/**
+ *  删选用户身份的菜单
+ * @param {Array} sysidList 要删除的菜单
+ * @param {Array} data  通过条件查询到的所有菜单
+ * @returns
+ */
+
+function getUserMenuData(sysidList, data) {
+    let List = [];
+    if (Array.isArray(sysidList)) {
+        sysidList.forEach((id) => {
+            const index = data.findIndex((item) => item.menu_id === id);
+            data.splice(index, 1);
+        });
+        List = data;
+    }
+    return List;
+}
 /**
  * 菜单数据操作
  * 查询 getUserMenu()
@@ -9,15 +28,30 @@ const { query } = require("./model/query");
  */
 class menuO {
     // 查询所有菜单
-    async getUserMenu() {
-        const data = await query(`SELECT * FROM sys_menu WHERE is_deleted='0'`);
-        const sysidList = [1, 2, 4, 28, 29];
-        if (global.userData !== undefined && global.userData.user_identity === 1) {
-            sysidList.forEach((id) => {
-                const index = data.findIndex((item) => item.menu_id === id);
-                data.splice(index, 1);
-            });
-            // } else {
+    async getUserMenu(ctx) {
+        let data = [];
+        const userData = jwtDecodeToken(ctx);
+
+        if (userData !== undefined) {
+            if (userData.userIdentity == 0) {
+                data = await query(`SELECT * FROM sys_menu WHERE is_deleted='0'`);
+            } else if (userData.userIdentity == 1) {
+                const sysidList = [1, 10, 17];
+                const List = await query(`SELECT * FROM sys_menu WHERE is_deleted='0'`);
+                data = getUserMenuData(sysidList, List);
+            } else if (userData.userIdentity == 2) {
+                const sysidList = [1, 10, 17];
+                const List = await query(`SELECT * FROM sys_menu WHERE is_deleted='0'`);
+                data = getUserMenuData(sysidList, List);
+            } else if (userData.userIdentity == 3) {
+                const sysidList = [1, 10, 17];
+                const List = await query(`SELECT * FROM sys_menu WHERE is_deleted='0'`);
+                data = getUserMenuData(sysidList, List);
+            } else if (userData.userIdentity == 4) {
+                const sysidList = [1, 34];
+                const List = await query(`SELECT * FROM sys_menu WHERE is_deleted='0'`);
+                data = getUserMenuData(sysidList, List);
+            }
         }
         return data;
     }
