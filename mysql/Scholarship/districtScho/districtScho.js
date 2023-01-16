@@ -15,7 +15,6 @@ class districtschos {
         for (const key in data) {
             // 删除id属性
             delete data[key].is_deleted;
-            delete data[key].is_deleted;
             data[key].create_time = moment(data[key].create_time).format("YYYY年MM月DD日");
             data[key].update_time = moment(data[key].update_time).format("YYYY年MM月DD日");
         }
@@ -27,7 +26,6 @@ class districtschos {
         const data = await query(`SELECT * FROM districtschos WHERE is_deleted='0'`);
         for (const key in data) {
             // 删除id属性
-            delete data[key].is_deleted;
             delete data[key].is_deleted;
             data[key].create_time = moment(data[key].create_time).format("YYYY年MM月DD日");
             data[key].update_time = moment(data[key].update_time).format("YYYY年MM月DD日");
