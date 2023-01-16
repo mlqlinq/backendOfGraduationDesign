@@ -43,6 +43,15 @@ router
             data: sortByKey(Data, "create_time"),
             total: Data.length,
         };
+    })
+
+    .post("/SubmitNationalschos", async (ctx) => {
+        const data = ctx.request.body;
+        console.log("🚀 ~ file: districtScho.js:52 ~ .post ~ data", data);
+        await nationalschos.postSubmitApplication(data);
+        ctx.body = {
+            msg: "提交成功！",
+        };
     });
 
 module.exports = router;

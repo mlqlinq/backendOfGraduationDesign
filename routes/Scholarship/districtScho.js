@@ -45,6 +45,15 @@ router
             data: sortByKey(Data, "create_time"),
             total: Data.length,
         };
+    })
+
+    .post("/SubmitDistrictschos", async (ctx) => {
+        const data = ctx.request.body;
+        console.log("🚀 ~ file: districtScho.js:52 ~ .post ~ data", data);
+        await districtschos.postSubmitApplication(data);
+        ctx.body = {
+            msg: "提交成功！",
+        };
     });
 
 module.exports = router;

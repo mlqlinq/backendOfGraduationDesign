@@ -21,6 +21,7 @@ router
             msg: "文件下载成功",
         };
     })
+
     .get("/AlluniversityScho", async (ctx) => {
         const Data = await universityScho.getAllUniversityschoData();
         ctx.body = {
@@ -42,6 +43,15 @@ router
             msg: "查询成功！",
             data: sortByKey(Data, "create_time"),
             total: Data.length,
+        };
+    })
+
+    .post("/SubmitUniversityScho", async (ctx) => {
+        const data = ctx.request.body;
+        console.log("🚀 ~ file: districtScho.js:52 ~ .post ~ data", data);
+        await universityScho.postSubmitApplication(data);
+        ctx.body = {
+            msg: "提交成功！",
         };
     });
 

@@ -44,6 +44,14 @@ router
             data: sortByKey(Data, "create_time"),
             total: Data.length,
         };
+    })
+
+    .post("/SubmitApplication", async (ctx) => {
+        const data = ctx.request.body;
+        // await nationalendeavor.postSubmitApplication(data);
+        ctx.body = {
+            msg: "提交成功！",
+        };
     });
 
 module.exports = router;
