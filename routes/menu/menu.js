@@ -88,7 +88,6 @@ router
                 data: arr,
                 total: arr.length,
             };
-            console.log("🚀 ~ file: menu.js:91 ~ .get ~ arr", arr);
         } else {
             return (ctx.body = { type: "error", message: "没有数据" });
         }
