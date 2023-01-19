@@ -7,8 +7,6 @@ const { query } = require("./model/query");
 class UserModel {
     // 用户 以及查询个人信息
     async getUser(userdata) {
-        console.log(1);
-        console.log("🚀 ~ file: userModel.js:10 ~ UserModel ~ getUser ~ userdata", userdata.userIdentity);
         let data = [];
         if (userdata.userIdentity == 0) {
             data = await query(`SELECT * FROM sys_user WHERE username = '${userdata.name}' AND is_deleted='0'`);
@@ -29,6 +27,12 @@ class UserModel {
             console.log(3);
             return data;
         }
+    }
+
+    /**查询学生的银行卡号，内部接口 */
+    async getStudentBank(idCardNum) {
+        const data = await query(`SELECT * FROM sys_students WHERE id_card_number = '${idCardNum}' AND is_deleted='0'`);
+        return data;
     }
 
     // 用户注册
