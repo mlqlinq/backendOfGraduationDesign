@@ -47,10 +47,48 @@ router
 
     .post("/SubmitNationalschos", async (ctx) => {
         const data = ctx.request.body;
-        console.log("🚀 ~ file: districtScho.js:52 ~ .post ~ data", data);
         await nationalschos.postSubmitApplication(data);
         ctx.body = {
             msg: "提交成功！",
+        };
+    })
+
+    .put("/putNationalschosClassExamine", async (ctx) => {
+        const data = ctx.request.body;
+        const msg = await nationalschos.postClassExamine(data);
+        if ("msg" in msg) {
+            return (ctx.body = {
+                msg: msg.msg,
+            });
+        }
+        ctx.body = {
+            msg: "提交审核成功！",
+        };
+    })
+
+    .put("/putNationalschosSchoolExamine", async (ctx) => {
+        const data = ctx.request.body;
+        const msg = await nationalschos.postSchoolExamine(data);
+        if ("msg" in msg) {
+            return (ctx.body = {
+                msg: msg.msg,
+            });
+        }
+        ctx.body = {
+            msg: "提交审核成功！",
+        };
+    })
+
+    .put("/putNationalschosDepartmentExamine", async (ctx) => {
+        const data = ctx.request.body;
+        const msg = await nationalschos.postDepartmentExamine(data);
+        if ("msg" in msg) {
+            return (ctx.body = {
+                msg: msg.msg,
+            });
+        }
+        ctx.body = {
+            msg: "提交审核成功！",
         };
     });
 

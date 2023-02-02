@@ -5,7 +5,7 @@ const { query } = require("./model/query");
  * 登录注册，获取菜单数据
  */
 class UserModel {
-    // 用户 以及查询个人信息
+    // 用户登录
     async getUser(userdata) {
         let data = [];
         if (userdata.userIdentity == 0) {
@@ -25,6 +25,36 @@ class UserModel {
         } else {
             data[0].userIdentity = userdata.userIdentity;
             console.log(3);
+            return data;
+        }
+    }
+
+    /**个人中心查询接口 */
+    async getMyInformation(userdata) {
+        let data = [];
+        if (userdata.userIdentity == 0) {
+            data = await query(`SELECT * FROM sys_user WHERE username = '${userdata.name}' AND is_deleted='0'`);
+        } else if (userdata.userIdentity == 1) {
+            data = await query(`SELECT * FROM sys_colleges_universities WHERE id_card_number = '${userdata.id_card_number}' AND is_deleted='0'`);
+        } else if (userdata.userIdentity == 2) {
+            data = await query(`SELECT * FROM sys_department_secretary WHERE id_card_number = '${userdata.id_card_number}' AND is_deleted='0'`);
+        } else if (userdata.userIdentity == 3) {
+            data = await query(`SELECT * FROM sys_guide_table WHERE id_card_number = '${userdata.id_card_number}' AND is_deleted='0'`);
+        } else if (userdata.userIdentity == 4) {
+            data = await query(`SELECT * FROM sys_students WHERE id_card_number = '${userdata.id_card_number}' AND is_deleted='0'`);
+        }
+        if (data.length === 0) {
+            return data;
+        } else {
+            data[0].userIdentity = userdata.userIdentity;
+            for (const key in data) {
+                delete data[key].guide_id;
+                delete data[key].password;
+                delete data[key].universities_id;
+                delete data[key].create_time;
+                delete data[key].update_time;
+                delete data[key].is_deleted;
+            }
             return data;
         }
     }

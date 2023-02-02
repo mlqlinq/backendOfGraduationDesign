@@ -36,19 +36,19 @@ class menuO {
             if (userData.userIdentity == 0) {
                 data = await query(`SELECT * FROM sys_menu WHERE is_deleted='0'`);
             } else if (userData.userIdentity == 1) {
-                const sysidList = [1, 10, 17];
+                const sysidList = [1, 10, 17, 40];
                 const List = await query(`SELECT * FROM sys_menu WHERE is_deleted='0'`);
                 data = getUserMenuData(sysidList, List);
             } else if (userData.userIdentity == 2) {
-                const sysidList = [1, 10, 17];
+                const sysidList = [1, 10, 17, 40];
                 const List = await query(`SELECT * FROM sys_menu WHERE is_deleted='0'`);
                 data = getUserMenuData(sysidList, List);
             } else if (userData.userIdentity == 3) {
-                const sysidList = [1, 10, 17];
+                const sysidList = [1, 10, 17, 40];
                 const List = await query(`SELECT * FROM sys_menu WHERE is_deleted='0'`);
                 data = getUserMenuData(sysidList, List);
             } else if (userData.userIdentity == 4) {
-                const sysidList = [1, 34];
+                const sysidList = [1, 34, 40];
                 const List = await query(`SELECT * FROM sys_menu WHERE is_deleted='0'`);
                 data = getUserMenuData(sysidList, List);
             }

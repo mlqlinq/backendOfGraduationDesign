@@ -52,6 +52,31 @@ router
         ctx.body = {
             msg: "提交成功！",
         };
-    });
+    })
 
+    .put("/putNationalendeavorSchoolExamine", async (ctx) => {
+        const data = ctx.request.body;
+        const msg = await nationalendeavor.postSchoolExamine(data);
+        if ("msg" in msg) {
+            return (ctx.body = {
+                msg: msg.msg,
+            });
+        }
+        ctx.body = {
+            msg: "提交审核成功！",
+        };
+    })
+
+    .put("/putNationalendeavorDepartmentExamine", async (ctx) => {
+        const data = ctx.request.body;
+        const msg = await nationalendeavor.postDepartmentExamine(data);
+        if ("msg" in msg) {
+            return (ctx.body = {
+                msg: msg.msg,
+            });
+        }
+        ctx.body = {
+            msg: "提交审核成功！",
+        };
+    });
 module.exports = router;

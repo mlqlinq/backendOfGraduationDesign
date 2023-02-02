@@ -48,10 +48,48 @@ router
 
     .post("/SubmitUniversityScho", async (ctx) => {
         const data = ctx.request.body;
-        console.log("🚀 ~ file: districtScho.js:52 ~ .post ~ data", data);
         await universityScho.postSubmitApplication(data);
         ctx.body = {
             msg: "提交成功！",
+        };
+    })
+
+    .put("/putUniverClassExamine", async (ctx) => {
+        const data = ctx.request.body;
+        const msg = await universityScho.postClassExamine(data);
+        if ("msg" in msg) {
+            return (ctx.body = {
+                msg: msg.msg,
+            });
+        }
+        ctx.body = {
+            msg: "提交审核成功！",
+        };
+    })
+
+    .put("/putUniverSchoolExamine", async (ctx) => {
+        const data = ctx.request.body;
+        const msg = await universityScho.postSchoolExamine(data);
+        if ("msg" in msg) {
+            return (ctx.body = {
+                msg: msg.msg,
+            });
+        }
+        ctx.body = {
+            msg: "提交审核成功！",
+        };
+    })
+
+    .put("/putUniverDepartmentExamine", async (ctx) => {
+        const data = ctx.request.body;
+        const msg = await universityScho.postDepartmentExamine(data);
+        if ("msg" in msg) {
+            return (ctx.body = {
+                msg: msg.msg,
+            });
+        }
+        ctx.body = {
+            msg: "提交审核成功！",
         };
     });
 
