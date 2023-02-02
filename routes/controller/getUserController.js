@@ -80,8 +80,7 @@ router
     .get("/getMyinformation", async (ctx) => {
         const myId = ctx.request.query;
         console.log("🚀 ~ file: getUserController.js:83 ~ .get ~ myId", myId);
-        const myData = await User.getUser(myId);
-        // const myData = await User.getMyInformation(myId);
+        const myData = await User.getMyInformation(myId);
         ctx.body = {
             data: myData[0],
             msg: "查询成功！",
