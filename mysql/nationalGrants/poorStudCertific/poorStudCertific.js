@@ -45,6 +45,7 @@ class poorStudCertific {
             }','${data.auxiliary_instruction_materials}','','','')`
         );
     }
+
     /**
      * 查询所有申请
      * @param {*} idCardNum
