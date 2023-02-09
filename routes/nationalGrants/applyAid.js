@@ -19,6 +19,7 @@ sortByKey = (array, key) => {
 
 router.prefix("/nationalGrants");
 router
+    /**学生个人查询 */
     .get("/getgStudentApplyData", async (ctx) => {
         const idCardNum = ctx.request.query.id_card_number;
         const data = await applyAid.getStudentapplyAidData(idCardNum);
@@ -34,7 +35,7 @@ router
         };
     })
 
-    /*  国家助学金申请 */
+    /**  国家助学金申请 */
     .post("/submitStudentApplyData", async (ctx) => {
         const data = ctx.request.body;
         const familyData = await poorStudCertific.getStudentPoorData(data.id_card_number);
@@ -47,6 +48,68 @@ router
         await applyAid.postStudentapplyAidData(data);
         ctx.body = {
             msg: "提交成功！",
+        };
+    })
+
+    /**
+     * 查询所有的申请
+     */
+
+    .get("/getAllApplyAidData", async (ctx) => {
+        const loginData = ctx.request.query;
+        const data = await applyAid.getAllStudentPoorData(loginData);
+        ctx.body = {
+            msg: "查询成功！",
+            data,
+            total: data.length,
+        };
+    })
+
+    /**
+     * 民主评议 导员提交审核
+     */
+    .put("/putApplyAidClassExamine", async (ctx) => {
+        const data = ctx.request.body;
+        const msg = await applyAid.postClassExamine(data);
+        if ("msg" in msg) {
+            return (ctx.body = {
+                msg: msg.msg,
+            });
+        }
+        ctx.body = {
+            msg: "提交审核成功！",
+        };
+    })
+
+    /**
+     * 学校提交审核
+     */
+    .put("/putApplyAidSchoolExamine", async (ctx) => {
+        const data = ctx.request.body;
+        const msg = await applyAid.postSchoolExamine(data);
+        if ("msg" in msg) {
+            return (ctx.body = {
+                msg: msg.msg,
+            });
+        }
+        ctx.body = {
+            msg: "提交审核成功！",
+        };
+    })
+
+    /**
+     * 院系提交审核
+     */
+    .put("/putApplyAidDepartmentExamine", async (ctx) => {
+        const data = ctx.request.body;
+        const msg = await applyAid.postDepartmentExamine(data);
+        if ("msg" in msg) {
+            return (ctx.body = {
+                msg: msg.msg,
+            });
+        }
+        ctx.body = {
+            msg: "提交审核成功！",
         };
     });
 
