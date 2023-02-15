@@ -38,7 +38,7 @@ app.use(
     jwt({
         secret: config.PRIVATE_KEY,
     }).unless({
-        path: [/^\/user\/login/, /^\/captcha/, /^\/404/, /^\/upload/],
+        path: [/^\/user\/login/, /^\/captcha/, /^\/404/, /^\/upload/, /^\//],
     })
 )
 
@@ -70,7 +70,7 @@ app.use(
                 hashAlgorithm: "md5",
                 keepExtensions: true, // 保持文件后缀
                 uploadDir: uploadPath, // 初始指定文件存放地址，否则将会放入系统临时文件目录
-                maxFileSize: 10000 * 1024 * 1024, // 设置上传文件大小最大限制，默认20M
+                maxFileSize: 20000 * 1024 * 1024, // 设置上传文件大小最大限制，默认20M
                 parsedMethods: ["POST", "PUT", "PATCH"],
                 // 仅可以修改文件的后缀名，同时也可以去控制其图片大小以及修改上传的图片名称
                 onFileBegin: (name, file) => {

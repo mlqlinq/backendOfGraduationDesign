@@ -10,14 +10,13 @@ router
         const userData = ctx.request.body;
         // userData.ii = userData.user_id;
         // userData.ia = userData.bank_card_no;
-        const a = await useUserData.editUserData(userData);
+        await useUserData.editUserData(userData);
         ctx.body = {
             msg: "保存成功！",
         };
     })
     .post("/editGuideInform", async (ctx) => {
         const data = ctx.request.body;
-        console.log("🚀 ~ file: savePersonalform.js:20 ~ .post ~ data", data);
         ctx.body = {
             msg: "保存成功！",
         };
