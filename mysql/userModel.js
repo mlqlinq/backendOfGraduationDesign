@@ -71,13 +71,21 @@ class UserModel {
                             VALUES ('${name}', '${password}')`);
     }
 
-    // 获取所有用户数据
+    /**
+     * 获取所有用户数据
+     * @returns
+     */
     async getAllUser() {
         return await query(`SELECT * FROM sys_user WHERE is_deleted='0'`);
     }
 
+    /**
+     * 学生 管理员 修改个人信息 接口
+     * @param {*} data
+     * @returns
+     */
     async editUserData(data) {
-        if (data.user_identity === "1") {
+        if (data.user_identity === "4") {
             await query(`UPDATE sys_students 
             SET bank_card_no = '${data.bank_card_no}',
             bank_of_deposit = '${data.bank_of_deposit}', 
@@ -109,7 +117,6 @@ class UserModel {
             student_sex = '${data.student_sex}',
             student_start_year = '${data.student_start_year}',
             student_status = '${data.student_status}',
-            student_type = '${data.student_type}',
             training_level = '${data.training_level}',
             university_name = '${data.university_name}'
             WHERE user_id = ${data.user_id}`);

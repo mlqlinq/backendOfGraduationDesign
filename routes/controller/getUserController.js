@@ -79,7 +79,6 @@ router
     // 登录后获取用户个人信息接口
     .get("/getMyinformation", async (ctx) => {
         const myId = ctx.request.query;
-        console.log("🚀 ~ file: getUserController.js:83 ~ .get ~ myId", myId);
         const myData = await User.getMyInformation(myId);
         ctx.body = {
             data: myData[0],
