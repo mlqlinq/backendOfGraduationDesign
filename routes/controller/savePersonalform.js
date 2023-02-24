@@ -20,6 +20,22 @@ router
         ctx.body = {
             msg: "保存成功！",
         };
+    })
+    .post("/saveGuideImg", async (ctx) => {
+        const imgUrl = ctx.request.body.imgUrl;
+        const guideId = ctx.request.body.guideId;
+        await useUserData.saveGuideImg(imgUrl, guideId);
+        ctx.body = {
+            msg: "更换成功",
+        };
+    })
+    .post("/saveSecretaryImg", async (ctx) => {
+        const imgUrl = ctx.request.body.imgUrl;
+        const secretaryId = ctx.request.body.secretaryId;
+        await useUserData.savSecretaryImg(imgUrl, secretaryId);
+        ctx.body = {
+            msg: "更换成功",
+        };
     });
 
 module.exports = router;

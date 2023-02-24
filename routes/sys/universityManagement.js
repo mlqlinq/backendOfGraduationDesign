@@ -31,18 +31,6 @@ const filterRepeat = (arr, index) => {
     return newArr;
 };
 
-const filterRepeat2 = (arr) => {
-    let Array = []; //存放去重过后的数据
-    let obj = {};
-    for (const i = 0; i < arr.length; i++) {
-        if (!obj[arr[i].user_id]) {
-            Array.push(arr[i]);
-            obj[arr[i].user_id] = true;
-        }
-    }
-    return Array;
-};
-
 router.prefix("/univerMan");
 router
     .get("/getUniversityManagemento", async (ctx) => {
