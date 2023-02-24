@@ -48,9 +48,7 @@ class UserModel {
         } else {
             data[0].userIdentity = userdata.userIdentity;
             for (const key in data) {
-                delete data[key].guide_id;
                 delete data[key].password;
-                delete data[key].universities_id;
                 delete data[key].create_time;
                 delete data[key].update_time;
                 delete data[key].is_deleted;
@@ -136,6 +134,28 @@ class UserModel {
         WHERE menu_id = '${data.menuid}'`);
             return;
         }
+    }
+
+    /**
+     * 导员修改头像
+     * @param {头像地址} imgUrl
+     * @param {修改id} guideId
+     * @returns
+     */
+    async saveGuideImg(imgUrl, guideId) {
+        await query(`UPDATE sys_guide_table SET imageUrl = '${imgUrl}' WHERE guide_id = '${guideId}'`);
+        return;
+    }
+
+    /**
+     * 书记修改头像
+     * @param {头像地址} imgUrl
+     * @param {修改id} guideId
+     * @returns
+     */
+    async savSecretaryImg(imgUrl, secretaryId) {
+        await query(`UPDATE sys_department_secretary SET imageUrl = '${imgUrl}' WHERE secretary_id = '${secretaryId}'`);
+        return;
     }
 }
 

@@ -1,6 +1,6 @@
 // 图形验证码 接口
 const Router = require("koa-router");
-const {Base64} = require("js-base64");
+const { Base64 } = require("js-base64");
 const svgCaptcha = require("svg-captcha");
 const router = new Router();
 
