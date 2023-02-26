@@ -38,17 +38,38 @@ router
     /**  国家助学金申请 */
     .post("/submitStudentApplyData", async (ctx) => {
         const data = ctx.request.body;
-        const familyData = await poorStudCertific.getStudentPoorData(data.id_card_number);
-        if (familyData.length > 2) {
-            sortByKey(familyData, "id");
-            data.family_member_information = familyData[0].family_member_information;
+        const Verification = await poorStudCertific.getStudentPoorVerification(data.id_card_number);
+        if (Verification.length === 0) {
+            ctx.status = 500;
+            return (ctx.body = {
+                msg: "您不是贫困生身份！不可提交！",
+            });
         } else {
-            data.family_member_information = familyData[0].family_member_information;
+            const familyData = await poorStudCertific.getStudentPoorData(data.id_card_number);
+            if (familyData.length > 2) {
+                sortByKey(familyData, "id");
+                data.family_member_information = familyData[0].family_member_information;
+            } else {
+                data.family_member_information = familyData[0].family_member_information;
+            }
+            await applyAid.postStudentapplyAidData(data);
+            return (ctx.body = {
+                msg: "提交成功！",
+            });
         }
-        await applyAid.postStudentapplyAidData(data);
-        ctx.body = {
-            msg: "提交成功！",
-        };
+    })
+
+    .post("/StudentVerification", async (ctx, next) => {
+        const data = ctx.request.body;
+        const Verification = await poorStudCertific.getStudentPoorVerification(data.id_card_number);
+        if (Verification.length === 0) {
+            // ctx.status = 500;
+            return (ctx.body = {
+                msg: "您不是贫困生身份！不可申请！",
+            });
+        } else {
+            next();
+        }
     })
 
     /**
