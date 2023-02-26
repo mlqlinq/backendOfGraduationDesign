@@ -20,6 +20,16 @@ class poorStudCertific {
         return List;
     }
 
+    /**
+     * 查询学生是否是贫困生身份
+     * @param {*} idCardNum
+     * @returns
+     */
+    async getStudentPoorVerification(idCardNum) {
+        const List = await query(`SELECT * FROM poor_student_certification WHERE id_card_number = '${idCardNum}' AND is_deleted='0'`);
+        return List;
+    }
+
     /** 认证申请 */
     async postStudentPoorApplyData(data) {
         await query(

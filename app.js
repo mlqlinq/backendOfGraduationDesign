@@ -38,7 +38,7 @@ app.use(
     jwt({
         secret: config.PRIVATE_KEY,
     }).unless({
-        path: [/^\/user\/login/, /^\/captcha/, /^\/404/, "/univerMan/uploadFormiadble"],
+        path: [/^\/user\/login/, /^\/captcha/, /^\/404/, "/univerMan/uploadFormiadble", /^\/upload/],
     })
 )
 
