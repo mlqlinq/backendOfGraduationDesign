@@ -20,11 +20,9 @@ class UserModel {
             data = await query(`SELECT * FROM sys_students WHERE id_card_number = '${userdata.name}' AND is_deleted='0'`);
         }
         if (data.length === 0) {
-            console.log(2);
             return data;
         } else {
             data[0].userIdentity = userdata.userIdentity;
-            console.log(3);
             return data;
         }
     }

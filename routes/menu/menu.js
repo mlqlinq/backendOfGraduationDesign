@@ -130,7 +130,6 @@ router
 
     // 添加菜单
     .post("/addMenu", async (ctx) => {
-        console.log("aa", ctx.request.body);
         const Data = ctx.request.body;
         await useManu.addMenu(Data);
         ctx.body = {
@@ -141,7 +140,6 @@ router
 
     // 修改菜单
     .put("/editMenu", async (ctx) => {
-        console.log("bb", ctx.request.body);
         const Data = ctx.request.body;
         Data.path = Data.path.replaceAll("/", "");
         await useManu.editMenu(Data);

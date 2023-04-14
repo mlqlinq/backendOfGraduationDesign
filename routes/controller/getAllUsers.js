@@ -8,7 +8,6 @@ router.get("/getUserList", async (ctx) => {
     newArrVal.map((e) => {
         delete e.password, delete e.create_time, delete e.create_by, delete e.update_by;
     });
-    // console.log(newArrVal)
     if (userList.length > 0) {
         ctx.body = { code: 200, total: newArrVal.length, data: newArrVal, message: "查询成功" };
     }

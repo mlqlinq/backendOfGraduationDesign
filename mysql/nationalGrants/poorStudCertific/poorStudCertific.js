@@ -26,6 +26,7 @@ class poorStudCertific {
      * @returns
      */
     async getStudentPoorVerification(idCardNum) {
+        // 查询学生是否是贫困生身份
         const List = await query(`SELECT * FROM poor_student_certification WHERE id_card_number = '${idCardNum}' AND is_deleted='0'`);
         return List;
     }

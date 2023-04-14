@@ -25,13 +25,14 @@ function getUserMenuData(sysidList, data) {
  * 添加
  * 修改
  * 删除
- */
+*/
 class menuO {
     // 查询所有菜单
     async getUserMenu(ctx) {
         let data = [];
+        console.log("🚀 ~ file: menuOperation.js:32 ~ menuO ~ getUserMenu ~ ctx:", ctx)
         const userData = jwtDecodeToken(ctx);
-
+        
         if (userData !== undefined) {
             if (userData.userIdentity == 0) {
                 data = await query(`SELECT * FROM sys_menu WHERE is_deleted='0'`);
@@ -55,7 +56,7 @@ class menuO {
         }
         return data;
     }
-
+    
     // 添加菜单
     async addMenu(data) {
         return await query(`INSERT INTO sys_menu(

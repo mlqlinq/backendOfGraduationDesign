@@ -48,7 +48,7 @@ router
 
     .post("/SubmitApplication", async (ctx) => {
         const data = ctx.request.body;
-        // await nationalendeavor.postSubmitApplication(data);
+        await nationalendeavor.postSubmitApplication(data);
         ctx.body = {
             msg: "提交成功！",
         };

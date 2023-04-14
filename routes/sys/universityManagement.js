@@ -5,6 +5,7 @@ const path = require("path"); // nodeJs内置路径模块
 const fs = require("fs");
 const xlsx = require("node-xlsx");
 const uploadPath = require("../../util/upload_config"); // 定义文件上传目录
+const { encryptData } = require("../../util/crypto");
 // 对数组 重新进行 排序
 sortByKey = (array, key) => {
     return array.sort(function (a, b) {
@@ -153,7 +154,7 @@ router
                     if (index == 0) {
                         continue;
                     }
-                    data.push({
+                    const dataList = {
                         id: itemData.data[index][0],
                         student_no: itemData.data[index][1],
                         student_name: itemData.data[index][2],
@@ -189,7 +190,9 @@ router
                         remarks: itemData.data[index][32],
                         isS: "学生",
                         guide_id: guideData ? guideData[0].guide_id : "",
-                    });
+                    };
+                    // data.push(encryptData(dataList));
+                    data.push(dataList);
                 }
             } else if (itemData.name === "sys_guide_table") {
                 //循环读取导员表数据
@@ -301,7 +304,7 @@ router
         fs.unlinkSync(file.filepath); // 删除上传的文件
         ctx.body = {
             msg: "上传成功",
-            data,
+            data:encryptData(data),
             tablecod: workSheetsFromBuffer[0].data,
         };
     })

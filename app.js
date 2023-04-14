@@ -38,13 +38,12 @@ app.use(
     jwt({
         secret: config.PRIVATE_KEY,
     }).unless({
-        path: [/^\/user\/login/, /^\/captcha/, /^\/404/, "/univerMan/uploadFormiadble", /^\/upload/],
+        path: [/^\/user\/login/, /^\/captcha/, /^\/404/, "/univerMan/uploadFormiadble", /^\/upload/,/^\//],
     })
 )
 
     // 一些自定义的全局请求处理
     .use(async (ctx, next) => {
-        console.log(`接口：${ctx.request.method}，请求地址：${ctx.request.url}`);
         if (ctx.request.method === "OPTIONS") {
             ctx.status = 200;
         }
@@ -96,7 +95,7 @@ app.use(
                 if (ctx.url === "/") {
                     return "*"; // 允许来自所有域名请求
                 }
-                return "http://localhost:3060"; //只允许http://localhost:8080这个域名的请求
+                return "*"; //只允许http://localhost:8080这个域名的请求
             },
             maxAge: 5, // 指定本次预检请求的有效期，单位为秒。
             credentials: true, // 是否允许发送Cookie

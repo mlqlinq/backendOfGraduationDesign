@@ -69,7 +69,7 @@ router
                     type: "success",
                 };
             } else {
-                ctx.body = { type: "error", message: "用户名或密码不正确" };
+                ctx.body = { type: "error", message: "密码不正确" };
             }
         } else {
             ctx.body = { type: "error", message: "用户不存在" };
