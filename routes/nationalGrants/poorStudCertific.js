@@ -38,7 +38,6 @@ router
 
     .get("/getAllPoorCertificData", async (ctx) => {
         const loginData = ctx.request.query;
-        console.log("🚀 ~ file: poorStudCertific.js:41 ~ .get ~ loginData", loginData);
         const data = await poorStudCertific.getAllStudentPoorData(loginData);
         ctx.body = {
             msg: "查询成功！",

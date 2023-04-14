@@ -132,7 +132,7 @@ router
     // 查询分片文件是否上传
     .post("/checkSnippet", (ctx) => {
         const hash = ctx.request.body;
-        console.log(hash);
+        // console.log(hash);
         // 切片上传目录
         const chunksPath = path.join(uploadPath, hash, "/");
 

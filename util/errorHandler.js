@@ -38,7 +38,6 @@ module.exports = (app) => {
                 }
             }
         }
-
         return next().catch((err) => {
             if (err.status === 401) {
                 ctx.status = 401;

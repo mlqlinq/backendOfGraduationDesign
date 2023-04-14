@@ -9,14 +9,13 @@ router.get("/captcha", async (ctx, next) => {
     const newCaptcha = svgCaptcha.createMathExpr({
         size: 4, // 验证码长度
         fontSize: 45, // 验证码自号
-        ignoreChars: "0o1i", // 验证码字符中排除 0o1i
+        ignoreChars: "0o1ilIL", // 验证码字符中排除 0o1i
         noise: Math.floor(Math.random() * 3), // 干扰线条数目_随机0-4条
         width: 100,
         height: 40,
         color: true, //验证码字符是否有颜色，默认是没有，但是如果设置了背景颜色，那么默认就是有字符颜色
         background: "#a9a8a0", // 验证码图片背景颜色
     });
-
     const bas = newCaptcha.data;
     const dat = newCaptcha.text.toLowerCase();
     global.dat = dat;
